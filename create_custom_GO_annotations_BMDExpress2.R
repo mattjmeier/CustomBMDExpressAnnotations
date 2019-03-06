@@ -19,8 +19,8 @@ ensembl = useDataset("drerio_gene_ensembl",mart=ensembl)
 # for (myName in first.200.names) { print(head(getBM(attributes=c('ensembl_gene_id',myName), mart=ensembl), n=5)) }
 
 # Create the probe map table
-bmdexpressProbeMap <- getBM(attributes=c('agilent_g2519f','ensembl_gene_id'), mart=ensembl) # The first attribute will vary depending on the experiment and organism
-
+# NOTE: The first attribute will vary depending on the experiment and organism.
+bmdexpressProbeMap <- getBM(attributes=c('agilent_g2519f','ensembl_gene_id'), mart=ensembl) 
 # Rename columns...
 colnames(bmdexpressProbeMap)[1] = 'Array Probe'
 colnames(bmdexpressProbeMap)[2] = 'Category Component'
@@ -28,6 +28,7 @@ colnames(bmdexpressProbeMap)[2] = 'Category Component'
 write.table(bmdexpressProbeMap, file = "bmdexpressProbeMap.txt", quote = F, sep = "\t", row.names = F, col.names = T)
 
 # Create the category map table
+# NOTE: The third attribute must match the second attribute from above. This allows lookup from one table to another.
 bmdexpressCategoryMap <- getBM(attributes=c('go_id','name_1006','ensembl_gene_id'), mart=ensembl)
 # Rename columns...
 colnames(bmdexpressCategoryMap)[1] = 'Category ID'
